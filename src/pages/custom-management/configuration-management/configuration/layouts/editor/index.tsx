@@ -13,7 +13,7 @@ export const Editor = () => {
   return (
     <Container>
       <Rulers>
-        <Blueprint></Blueprint>
+        <Blueprint />
       </Rulers>
     </Container>
   );

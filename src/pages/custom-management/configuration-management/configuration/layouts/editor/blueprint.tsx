@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { IPosition } from "@/pages/custom-management/configuration-management/configuration/interface";
-import { useConfigurationProvider } from "@/pages/custom-management/configuration-management/configuration/context";
-import { SvgElement } from "./svg-element";
 import styled from "styled-components";
+
+import { useConfigurationProvider } from "@/pages/custom-management/configuration-management/configuration/context";
+import { IPosition } from "@/pages/custom-management/configuration-management/configuration/interface";
+
+import { SvgElement } from "./svg-element";
 
 const Container = styled.div`
   width: calc(100% - 18px);
   background: url("./src/assets/dot.bmp") repeat;
-  image-rendering: pixelated;
   opacity: 0.6;
 `;
 
@@ -19,7 +20,6 @@ const Canvas = styled.svg`
 export const Blueprint = () => {
   const configuration = useConfigurationProvider();
   const { elements, addElementAt } = configuration;
-  const [pressedOn, setPressedOn] = useState(false);
 
   const [svgElements, setSvgElements] = useState<JSX.Element[]>([]);
   const [selectedList, setSelectedList] = useState<
@@ -72,10 +72,6 @@ export const Blueprint = () => {
     console.log("drop");
   };
 
-  const dragging = (e: React.MouseEvent<Element, MouseEvent>) => {
-    const position = getDropPosition(e);
-  };
-
   return (
     <Container
       onDragEnter={(e) => {
@@ -87,17 +83,6 @@ export const Blueprint = () => {
         console.log("drag over");
       }}
       onDrop={handleDrop}
-      onMouseDown={() => {
-        setPressedOn(true);
-      }}
-      onMouseMove={(e) => {
-        if (pressedOn) {
-          dragging(e);
-        }
-      }}
-      onMouseUp={() => {
-        setPressedOn(false);
-      }}
     >
       <Canvas>
         <>

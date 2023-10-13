@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
-import { IProperty, IPosition } from "./interface";
+
+import { IPosition, IProperty } from "./interface";
 
 interface ConfigurationContextProps {
   elements: IProperty[];

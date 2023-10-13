@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
+
 import { ISvgProperty } from "../../interface";
 
 export const SvgElement = (props: {
