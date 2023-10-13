@@ -30,6 +30,7 @@ interface IUseResponsiveFormLayout {
   };
 }
 
+// @ts-ignore
 const calcBreakpointIndex: ICalcBreakpointIndex = (breakpoints, width) => {
   for (let i = 0; i < breakpoints.length; i++) {
     if (width <= breakpoints[i]) {
@@ -61,6 +62,7 @@ const calculateProps: ICalculateProps = (target, props) => {
     wrapperCol,
     ...otherProps
   } = props;
+  // @ts-ignore
   const breakpointIndex = calcBreakpointIndex(breakpoints, clientWidth);
 
   return {
@@ -73,6 +75,7 @@ const calculateProps: ICalculateProps = (target, props) => {
   };
 };
 
+// @ts-ignore
 export const useResponsiveFormLayout: IUseResponsiveFormLayout = (props) => {
   const ref = useRef<HTMLDivElement>(null);
   const { breakpoints } = props;

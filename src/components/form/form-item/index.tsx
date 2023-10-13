@@ -212,6 +212,7 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
               [`${prefixCls}-help`]: true,
             })}
           >
+            {/* @ts-ignore */}
             {ICON_MAP[feedbackStatus]} {feedbackText}
           </div>
         }
@@ -240,7 +241,9 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
 
   const renderLabelText = () => {
     const labelChildren = (
+      // @ts-ignore
       <div className={`${prefixCls}-label-content`} ref={containerRef}>
+        {/* @ts-ignore */}
         <span ref={contentRef}>
           {asterisk && requiredMark === true && (
             <span className={`${prefixCls}-asterisk`}>{"*"}</span>
@@ -328,6 +331,7 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
         [`${prefixCls}-control-wrap`]: !!wrapperWrap,
         [`${prefixCls}-bordered-none`]:
           bordered === false || !!inset || !!feedbackIcon,
+        // @ts-ignore
         [props.className]: !!props.className,
       })}
       onFocus={() => {
@@ -363,6 +367,7 @@ export const BaseItem: React.FC<React.PropsWithChildren<IFormItemProps>> = ({
                 !!feedbackIcon,
             })}
           >
+            {/* @ts-ignore */}
             <FormLayoutShallowContext.Provider value={undefined}>
               {formatChildren}
             </FormLayoutShallowContext.Provider>

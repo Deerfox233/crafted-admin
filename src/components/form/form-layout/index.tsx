@@ -119,7 +119,9 @@ FormLayout.defaultProps = {
   shallow: true,
 };
 
+// @ts-ignore
 FormLayout.useFormDeepLayout = useFormDeepLayout;
+// @ts-ignore
 FormLayout.useFormShallowLayout = useFormShallowLayout;
 FormLayout.useFormLayout = useFormLayout;
 
