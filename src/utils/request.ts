@@ -71,10 +71,19 @@ const request = async <T>(options: RequestOptions): Promise<T | null> => {
       return axiosResponse.data.data;
     })
     .catch(async (error: ResponseData<T> | AxiosError<ResponseData<T>>) => {
-      const errorMessage =
-        error instanceof AxiosError
-          ? error.response?.data.message
-          : error.message;
+      const DEFAULT_ERROR_MESSAGE = "请求发生错误，请联系管理员";
+      let errorMessage = DEFAULT_ERROR_MESSAGE;
+      if (error instanceof AxiosError) {
+        if (error.response?.data.message != null) {
+          errorMessage = error.response.data.message;
+        }
+      } else {
+        // error is ResponseData<T>
+        if (error.message != null) {
+          errorMessage = error.message;
+        }
+      }
+
       await message.error({
         duration: 1.5,
         content: errorMessage,
