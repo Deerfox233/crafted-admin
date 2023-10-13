@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import { LocalKeyEnum } from "@/constants/local-key";
-import { RouteKeyEnum, RoutePathEnum } from "@/constants/route-path";
+import { RouteKeyEnum, RoutePath, RoutePathEnum } from "@/constants/route-path";
 import { LoginResult } from "@/types/base";
 import { LocalStorageUtils } from "@/utils/local-storage";
 import { checkPermission } from "@/utils/permission";
@@ -83,15 +83,23 @@ export const useRouter = () => {
   return router;
 };
 
-export const useCurrentRoutePathKv = () => {
-  const { pathname } = useLocation();
-  const routePathKv = useMemo(() => {
-    return Object.entries(RoutePathEnum).find(([, value]) => {
-      // TODO 优化
-      if (pathname === value.path) {
-        return true;
-      }
-    });
-  }, [pathname]);
-  return routePathKv ?? [undefined, undefined];
+/**
+ * 返回路由的 key 和 routePath
+ * 如果外部没有指定 pathname，则使用当前路由
+ * @param pathname
+ * @returns
+ */
+export const useRoutePathKeyValue = (pathname?: string) => {
+  const { pathname: currentPathname } = useLocation();
+  const finalPathname = pathname ?? currentPathname;
+  const routePathKeyValue: [RouteKeyEnum, RoutePath] | undefined =
+    useMemo(() => {
+      return Object.entries(RoutePathEnum).find(([, value]) => {
+        // TODO 优化
+        if (finalPathname === value.path) {
+          return true;
+        }
+      }) as [RouteKeyEnum, RoutePath];
+    }, [finalPathname]);
+  return routePathKeyValue ?? [undefined, undefined];
 };

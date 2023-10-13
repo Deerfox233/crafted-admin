@@ -1,30 +1,47 @@
-import { useMemo } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import { useCurrentRoutePathKv } from "@/components/router/hooks/router";
-import { RoutePathEnum } from "@/constants/route-path";
+import { useRoutePathKeyValue } from "@/components/router/hooks/router";
+import { RouteKeyEnum, RoutePathEnum } from "@/constants/route-path";
 
 export const useMenuKey = () => {
-  const [selectedKey] = useCurrentRoutePathKv();
+  const [selectedKey] = useRoutePathKeyValue();
 
-  const openKeys = useMemo(() => {
-    const result: string[] = [];
+  // openKeys 两处触发变化：1. 随“叶节点”点击变化；2. 左侧菜单点击展开；
+  const [openKeys, setOpenKeys] = useState<RouteKeyEnum[]>([]);
+
+  // 1.随“叶节点”点击变化
+  useEffect(() => {
+    const result: RouteKeyEnum[] = [];
     if (selectedKey == null) {
-      return result;
+      return;
     }
-    const recursive = (openKey: string) => {
-      result.push(openKey);
+    const recursive = (openKey: RouteKeyEnum) => {
       Object.entries(RoutePathEnum).forEach(([key, value]) => {
-        if (key === openKey && value.parentKey != null) {
+        if (
+          (key as RouteKeyEnum) === openKey &&
+          value.parentKey != null &&
+          value.parentKey != RouteKeyEnum.ROOT
+        ) {
           recursive(value.parentKey);
+          result.push(value.parentKey);
         }
       });
     };
     recursive(selectedKey);
-    return result;
+    setOpenKeys((prevOpenKeys: RouteKeyEnum[]) => {
+      return [...new Set([...prevOpenKeys, ...result])];
+    });
   }, [selectedKey]);
+
+  // 2. 左侧菜单点击展开
+  const onOpenChange = useCallback((keys: string[]) => {
+    // keys 只包含“父节点”，不包含“叶子节点”
+    setOpenKeys(keys as RouteKeyEnum[]);
+  }, []);
 
   return {
     selectedKeys: selectedKey != null ? [selectedKey] : [],
     openKeys,
+    onOpenChange,
   };
 };

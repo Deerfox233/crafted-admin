@@ -26,6 +26,7 @@
 - 全程使用 formily 来做表单相关开发；不额外引入 @formily/antd（因为滞后），使用 antd 组件改造成 formily 组件；
 - navigate 不直接填写 path，而是要使用 RoutePathEnum.XX.path；
 - service 导出均需外包一层 XxxService，而不是直接导出函数（目的是增加代码的可读性）；
+- 所有需要登录后访问的路由，最少要加上 `permissionCodes: []`；无 `element` 的路由可不添加；
 
 ## 关于本地缓存
 

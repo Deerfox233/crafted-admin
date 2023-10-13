@@ -20,13 +20,14 @@ export const useMenuItems = () => {
               value.permissionCodes.every(checkPermission))
           ) {
             const menu: {
-              key: string;
+              key: RouteKeyEnum;
               label: string;
               icon?: React.ReactNode;
               children?: MenuProps["items"];
               onClick?: () => void;
+              onOpenChange?: () => void;
             } = {
-              key,
+              key: key as RouteKeyEnum,
               label: value.description,
               icon: value.menu.icon,
             };
@@ -34,7 +35,7 @@ export const useMenuItems = () => {
             if (children != null && children.length > 0) {
               menu.children = children;
             } else {
-              // 只有“叶子节点”点击才跳页
+              // “叶节点”点击跳页
               menu.onClick = () => {
                 navigate(value.path);
               };

@@ -5,8 +5,8 @@ import { useMenuKey } from "./hooks/menu-key";
 import styles from "./index.module.less";
 
 const Sider: React.FC = () => {
+  const { selectedKeys, openKeys, onOpenChange } = useMenuKey();
   const menuItems = useMenuItems();
-  const { selectedKeys, openKeys } = useMenuKey();
 
   return (
     <AntLayout.Sider
@@ -21,6 +21,7 @@ const Sider: React.FC = () => {
         items={menuItems}
         selectedKeys={selectedKeys}
         openKeys={openKeys}
+        onOpenChange={onOpenChange}
       />
     </AntLayout.Sider>
   );
