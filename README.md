@@ -1,5 +1,12 @@
 # crafted-admin
 
+## 功能特点
+
+1. 基于最新 React 技术栈：React V18、React Router V6、Ant Design V5、Vite、TypeScript 等；
+2. 集成完备的项目规范工具：Prettier、ESLint、commit-lint、lint-staged、husky 等；
+3. 菜单、权限、路由一体化配置（配置见 src/constants/route-path.tsx）；
+4. 认证与授权；
+
 ## 环境要求
 
 - node >= v18.15.0；

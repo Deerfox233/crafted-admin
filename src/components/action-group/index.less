@@ -1,0 +1,42 @@
+@import '~@/variable.less';
+
+.action-group {
+  // display: flex;
+  // flex-direction: row;
+  // align-items: center;
+  // flex-wrap: nowrap;
+
+  width: max-content;
+
+  &__item {
+    position: relative;
+    display: inline-block;
+    padding: 0 12px;
+    color: @primary-color;
+    cursor: pointer;
+
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+
+    &::after {
+      position: absolute;
+      top: 25%;
+      right: 0;
+      width: 1px;
+      height: 12px;
+      background-color: #e7e7e7;
+      content: '';
+    }
+    &:last-child::after {
+      display: none;
+    }
+
+    &--disabled {
+      color: @disabled-color;
+    }
+  }
+}

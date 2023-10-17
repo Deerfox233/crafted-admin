@@ -1,3 +1,5 @@
+import { RcFile } from "antd/es/upload";
+
 /**
  * 摘自 formily
  * @param props
@@ -39,4 +41,37 @@ export const generateColorFromString = (inputText: string): string => {
     .slice(1)}`;
 
   return color;
+};
+
+const isMac = () => {
+  if (/macintosh|mac os x/i.test(navigator.userAgent)) {
+    return true;
+  }
+  return false;
+};
+
+/**
+ * 判断文件大小是否符合要求，单位为 MB
+ * @param files
+ * @param size
+ * @returns
+ */
+export const isLimitSize = (files: RcFile, size = 100) => {
+  if (isMac()) {
+    return files.size / 1000 / 1000 < size;
+  }
+  return files.size / 1024 / 1024 < size;
+};
+
+/**
+ * 获取公共资源路径
+ * @param url
+ * @returns
+ */
+export const getResourceUrl = (url: string) => {
+  // http
+  if (url && url.startsWith("http")) {
+    return url;
+  }
+  return `/download/static/${url}`;
 };

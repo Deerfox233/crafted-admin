@@ -10,11 +10,14 @@ export enum RouteKeyEnum {
   USER = "USER",
   PERSONAL_INFORMATION = "PERSONAL_INFORMATION",
   ROLE_MANAGEMENT = "ROLE_MANAGEMENT",
-  CUSTOM_MANAGEMENT = "CUSTOM_MANAGEMENT",
-  CONFIGURATION_MANAGEMENT = "CONFIGURATION_MANAGEMENT",
+  NEW_ROLE = "NEW_ROLE",
   CONFIGURATION = "CONFIGURATION",
+  TOPO_MANAGEMENT = "TOPO_MANAGEMENT",
+  TOPO_EDITOR = "TOPO_EDITOR",
   PAGE_403 = "PAGE_403",
   PAGE_404 = "PAGE_404",
+
+  TEST = "TEST",
 }
 
 export interface RoutePath {
@@ -33,16 +36,12 @@ export interface RoutePath {
 }
 
 export const RoutePathEnum: Record<RouteKeyEnum, RoutePath> = {
-  [RouteKeyEnum.LOGIN]: {
-    path: "/login",
-    element: import("@/pages/base/login"),
-    description: "登录页",
-  },
   [RouteKeyEnum.ROOT]: {
     path: "/",
     element: import("@/components/layout"),
     description: "根路由",
   },
+  // ----------------------- 账户中心 -----------------------
   [RouteKeyEnum.USER]: {
     path: "/user",
     description: "账户中心",
@@ -67,27 +66,41 @@ export const RoutePathEnum: Record<RouteKeyEnum, RoutePath> = {
     parentKey: RouteKeyEnum.USER,
     menu: {},
   },
-  [RouteKeyEnum.CUSTOM_MANAGEMENT]: {
+  [RouteKeyEnum.NEW_ROLE]: {
+    path: "/user/role-management/new-role",
+    element: import("@/pages/user/role-management/new-role"),
+    permissionCodes: [PermissionCodeEnum.USER.ROLE_LIST],
+    description: "新增角色",
+    parentKey: RouteKeyEnum.USER,
+  },
+  // ----------------------- 配置管理 -----------------------
+  [RouteKeyEnum.CONFIGURATION]: {
     path: "/custom-management",
-    description: "自定义管理",
+    description: "配置管理",
     parentKey: RouteKeyEnum.ROOT,
     menu: {
       icon: <Icons.HomeOutlined />,
     },
   },
-  [RouteKeyEnum.CONFIGURATION_MANAGEMENT]: {
+  [RouteKeyEnum.TOPO_MANAGEMENT]: {
     path: "/custom-management/configuration-management",
+    element: import("@/pages/configuration/topo-management"),
+    permissionCodes: [], // TODO 超级管理员权限
     description: "组态管理",
-    element: import("@/pages/custom-management/configuration-management"),
-    parentKey: RouteKeyEnum.CUSTOM_MANAGEMENT,
+    parentKey: RouteKeyEnum.CONFIGURATION,
     menu: {},
   },
-  [RouteKeyEnum.CONFIGURATION]: {
+  [RouteKeyEnum.TOPO_EDITOR]: {
     path: "/configuration",
-    element: import(
-      "@/pages/custom-management/configuration-management/configuration"
-    ),
-    description: "组态编辑页",
+    element: import("@/pages/configuration/topo-editor"),
+    description: "组态编辑页", // TODO 超级管理员权限
+    permissionCodes: [],
+  },
+  // ----------------------- 其他页面 -----------------------
+  [RouteKeyEnum.LOGIN]: {
+    path: "/login",
+    element: import("@/pages/base/login"),
+    description: "登录页",
   },
   [RouteKeyEnum.PAGE_403]: {
     path: "/forbidden",
@@ -98,5 +111,10 @@ export const RoutePathEnum: Record<RouteKeyEnum, RoutePath> = {
     path: "*",
     element: import("@/pages/base/404"),
     description: "未认证",
+  },
+  [RouteKeyEnum.TEST]: {
+    path: "/test",
+    element: import("@/pages/base/test"),
+    description: "测试页",
   },
 };

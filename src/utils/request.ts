@@ -3,21 +3,16 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 
 import { LocalKeyEnum } from "@/constants/local-key";
 import { LoginResult } from "@/types/base";
+import { ResponseData } from "@/types/request";
 
 import { LocalStorageUtils } from "./local-storage";
 
-export interface RequestOptions {
+interface RequestOptions {
   url: string;
   method: "get" | "post" | "put" | "delete";
   data?: Record<string, unknown>;
   query?: Record<string, string>; // 用于 url 拼接
   header?: Record<string, unknown>;
-}
-
-export interface ResponseData<T> {
-  code: number;
-  data: T | null;
-  message?: string;
 }
 
 const request = async <T>(options: RequestOptions): Promise<T | null> => {
